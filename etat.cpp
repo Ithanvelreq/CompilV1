@@ -1,7 +1,13 @@
 #include "etat.h"
 #include <iostream>
 
-Etat * Etat1::transition(Automate & d, Symbole s){
-    cout<<"hello"<<endl;
-    return this;
+Etat * Etat0::transition(Automate & d, Symbole s){
+    if(s == INT){
+        return new Etat3();
+    }else if(s == OPENPAR){
+        return new Etat2();
+    }else if(s == EXPR){
+        return new Etat1();
+    }
+    return nullptr;
 }

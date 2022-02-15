@@ -3,6 +3,7 @@ Main
 
 # Testfile
 Maintest*
+.vscode
 
 # Prerequisites
 *.d
