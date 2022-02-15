@@ -11,3 +11,9 @@ void Entier::Affiche()
    Symbole::Affiche();
    cout << "(" << valeur << ")";
 }
+
+void Expr::Affiche()
+{
+   Symbole::Affiche();
+   cout << "(" << valeur << ")";
+}

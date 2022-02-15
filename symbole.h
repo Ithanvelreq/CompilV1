@@ -21,21 +21,19 @@ const string Etiquettes[] = {"OPENPAR", "CLOSEPAR", "PLUS", "MULT", "INT", "FIN"
 class Symbole
 {
 public:
-   Symbole(int i, bool t) : ident(i), terminal(t) {}
+   Symbole(int i) : ident(i) {}
    virtual ~Symbole() {}
    operator int() const { return ident; }
-   bool isTerminal() { return terminal; }
    virtual void Affiche();
 
 protected:
    int ident;
-   bool terminal;
 };
 
 class Entier : public Symbole
 {
 public:
-   Entier(int v) : Symbole(INT, true), valeur(v) {}
+   Entier(int v) : Symbole(INT), valeur(v) {}
    ~Entier() {}
    virtual void Affiche();
 
@@ -46,6 +44,10 @@ protected:
 class Expr : public Symbole
 {
 public:
-   Expr() : Symbole(EXPR, false) {}
+   Expr(int v) : Symbole(EXPR), valeur(v) {}
    ~Expr() {}
+   virtual void Affiche();
+
+protected:
+   int valeur;
 };
