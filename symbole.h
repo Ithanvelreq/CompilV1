@@ -25,6 +25,7 @@ public:
    virtual ~Symbole() {}
    operator int() const { return ident; }
    virtual void Affiche();
+   virtual int getValeur() { return 0; }
 
 protected:
    int ident;
@@ -36,6 +37,7 @@ public:
    Entier(int v) : Symbole(INT), valeur(v) {}
    ~Entier() {}
    virtual void Affiche();
+   virtual int getValeur() { return valeur; }
 
 protected:
    int valeur;
@@ -47,6 +49,7 @@ public:
    Expr(int v) : Symbole(EXPR), valeur(v) {}
    ~Expr() {}
    virtual void Affiche();
+   virtual int getValeur() { return valeur; }
 
 protected:
    int valeur;
