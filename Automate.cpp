@@ -15,7 +15,7 @@ int Automate::analyser(){
     bool accepted = false;
     while(!accepted || !stackSymbole.empty()){
         Symbole * suivant = lexer->Consulter();
-        accepted = stackEtats.top()->transition(*this, *suivant);
+        accepted = stackEtats.top()->transition(*this, suivant);
         lexer->Avancer();
         assert(stackEtats.size() == (stackSymbole.size()+1));
     }
@@ -28,9 +28,16 @@ Symbole * Automate::popSymbole(){
     return s;
 }
 
-void Automate::decalage (Symbole s, Etat * etat){
+void Automate::decalage (Symbole *s, Etat * etat){
     stackEtats.push(etat);
     stackSymbole.push(s);
 }
-/**
-void Automate::reduction (int n, Symbole s);*/
+
+void Automate::reduction(int n,Symbole * s) {
+    for (int i=0;i<n;i++)
+    {
+    delete(stackEtats.top());
+    stackEtats.pop();
+    }
+    stackEtats.top()->transition(*this,s);
+}

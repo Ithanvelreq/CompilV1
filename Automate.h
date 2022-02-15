@@ -11,8 +11,8 @@ class Automate{
         Automate(Etat * etat, string expression);
         ~Automate();
         int analyser();
-        void decalage (Symbole s, Etat * etat);
-        void reduction (int n, Symbole s);
+        void decalage (Symbole * s, Etat * etat);
+        void reduction (int n, Symbole * s);
         Symbole * popSymbole();
 
     protected:

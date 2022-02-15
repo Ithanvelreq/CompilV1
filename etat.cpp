@@ -3,19 +3,17 @@
 
 bool *Etat0::transition(Automate &d, Symbole *s)
 {
+    s->Affiche();
     if (*s == INT)
     {
-        cout << "INT" << endl;
         d.decalage(s, new Etat3());
     }
     else if (*s == OPENPAR)
     {
-        cout << "OPENPAR" << endl;
         d.decalage(s, new Etat2());
     }
     else if (*s == EXPR)
     {
-        cout << "EXPR" << endl;
         d.decalage(s, new Etat1());
     }
     return false;
@@ -23,6 +21,7 @@ bool *Etat0::transition(Automate &d, Symbole *s)
 
 bool *Etat1::transition(Automate &d, Symbole *s)
 {
+    s->Affiche();
     if (*s == PLUS)
     {
         d.decalage(s, new Etat4());
@@ -40,6 +39,7 @@ bool *Etat1::transition(Automate &d, Symbole *s)
 
 bool *Etat2::transition(Automate &d, Symbole *s)
 {
+    s->Affiche();
     if (*s == INT)
     {
         d.decalage(s, new Etat3());
@@ -57,6 +57,7 @@ bool *Etat2::transition(Automate &d, Symbole *s)
 
 bool *Etat3::transition(Automate &d, Symbole *s)
 {
+    s->Affiche();
     if (*s == PLUS)
     {
         regleCinq(d, s);
@@ -210,13 +211,13 @@ void Etat::regleCinq(Automate &d, Symbole *s)
 {
     Symbole *s1 = d.popSymbole();
     int exprValeur;
-    if (*s1 == INT)
+    if (*s1 == INT && *s1 == EXPR)
     {
-        exprValeur = *s1->getValeur();
+        exprValeur = s1->getValeur();
     }
     else
     {
-        cout << "ERREUR" << endl;
+        cout << "ERREUR lors de la reduction de la regle 5, le symbole n'a pas de valeur" << endl;
     }
     d.reduction(1, new Expr(exprValeur));
 }
