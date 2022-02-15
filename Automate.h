@@ -13,10 +13,10 @@ class Automate{
         int analyser();
         void decalage (Symbole s, Etat * etat);
         void reduction (int n, Symbole s);
-
+        Symbole * popSymbole();
 
     protected:
         stack<Etat *> stackEtats;
-        stack<Symbole *> stackSymboled;
+        stack<Symbole *> stackSymbole;
         Lexer * lexer;
 };
