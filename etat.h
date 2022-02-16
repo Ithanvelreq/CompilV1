@@ -9,19 +9,19 @@ class Etat
 {
 
 public:
-      Etat(int i): numEtat(i){}
-      virtual ~Etat() {}
+      Etat(int i): numEtat(i){cout << "constr etat" << endl;}
+      virtual ~Etat() {cout << "destr etat" << endl;}
       virtual int getNumEtat();
       virtual int transition(Automate &d, Symbole *s) = 0; // 0 pas encore fini mais valide pour l'instant
                                                            // 1 fini et valide
                                                            // 2 Pas valide
 
 protected:
-      void regle1(Automate &d, Symbole *s);
-      void regle2(Automate &d, Symbole *s);
-      void regle3(Automate &d, Symbole *s);
-      void regle4(Automate &d, Symbole *s);
-      void regle5(Automate &d, Symbole *s);
+      int regle1(Automate &d, Symbole *s);
+      int regle2(Automate &d, Symbole *s);
+      int regle3(Automate &d, Symbole *s);
+      int regle4(Automate &d, Symbole *s);
+      int regle5(Automate &d, Symbole *s);
       int numEtat = 88;
       
 };

@@ -6,16 +6,27 @@
 Automate::Automate(Etat *etat, string expression){
     stackEtats.push(etat);
     lexer = new Lexer(expression);
+    cout << "constr automate" << endl;
 }
 Automate::~Automate(){
+    while(!stackEtats.empty()){
+        delete(stackEtats.top());
+        stackEtats.pop();
+    }
+    while(!stackSymbole.empty()){
+        delete(stackSymbole.top());
+        stackSymbole.pop();
+    }
     delete(lexer);
+    cout << "destr automate" << endl;
 }
 
 bool Automate::analyser(){
     int accepted = 0;
     bool init = true;
+    Symbole * suivant;
     while(accepted==0 && (!stackSymbole.empty() || init)){
-        Symbole * suivant = lexer->Consulter();
+        suivant = lexer->Consulter();
         cout << "etat actuel: Etat" << stackEtats.top()->getNumEtat() << " ||| dernier symbole sur le stack ";
         if(!stackSymbole.empty()){
             stackSymbole.top()->Affiche();
@@ -27,6 +38,7 @@ bool Automate::analyser(){
         assert(stackEtats.size() == (stackSymbole.size()+1));
         init = false;
     }
+    delete(suivant);
     if (accepted==1){
         resultat = stackSymbole.top()->getValeur();
     }else{
@@ -46,7 +58,7 @@ void Automate::decalage (Symbole *s, Etat * etat){
     stackSymbole.push(s);
 }
 
-void Automate::reduction(int n,Symbole * expr, Symbole * teteLecture) {
+int Automate::reduction(int n,Symbole * expr, Symbole * teteLecture) {
     for (int i=0;i<n;i++)
     {
         delete(stackEtats.top());
@@ -55,7 +67,7 @@ void Automate::reduction(int n,Symbole * expr, Symbole * teteLecture) {
     cout << "reduction a l'etat " << stackEtats.top()->getNumEtat() << " avec symbole de trans: "; expr->Affiche();
     cout << endl;
     stackEtats.top()->transition(*this,expr);
-    stackEtats.top()->transition(*this,teteLecture);
+    return stackEtats.top()->transition(*this,teteLecture);
 }
 
 int Automate::getResultat(){

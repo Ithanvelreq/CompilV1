@@ -76,19 +76,19 @@ int Etat3::transition(Automate &d, Symbole *s)
     int valid = 0;
     if (*s == PLUS)
     {
-        regle5(d, s);
+        valid = regle5(d, s);
     }
     else if (*s == MULT)
     {
-        regle5(d, s);
+        valid = regle5(d, s);
     }
     else if (*s == CLOSEPAR)
     {
-        regle5(d, s);
+        valid = regle5(d, s);
     }
     else if (*s == FIN)
     {
-        regle5(d, s);
+        valid = regle5(d, s);
     }
     else
     {
@@ -168,7 +168,7 @@ int Etat7::transition(Automate &d, Symbole *s)
     int valid = 0;
     if (*s == PLUS)
     {
-        regle2(d, s);
+        valid = regle2(d, s);
     }
     else if (*s == MULT)
     {
@@ -176,11 +176,11 @@ int Etat7::transition(Automate &d, Symbole *s)
     }
     else if (*s == CLOSEPAR)
     {
-        regle2(d, s);
+        valid = regle2(d, s);
     }
     else if (*s == FIN)
     {
-        regle2(d, s);
+        valid = regle2(d, s);
     }
     else
     {
@@ -194,19 +194,19 @@ int Etat8::transition(Automate &d, Symbole *s)
     int valid = 0;
     if (*s == PLUS)
     {
-        regle3(d, s);
+        valid = regle3(d, s);
     }
     else if (*s == MULT)
     {
-        regle3(d, s);
+        valid = regle3(d, s);
     }
     else if (*s == CLOSEPAR)
     {
-        regle3(d, s);
+        valid = regle3(d, s);
     }
     else if (*s == FIN)
     {
-        regle3(d, s);
+        valid = regle3(d, s);
     }
     else
     {
@@ -220,19 +220,19 @@ int Etat9::transition(Automate &d, Symbole *s)
     int valid = 0;
     if (*s == PLUS)
     {
-        regle4(d, s);
+        valid = regle4(d, s);
     }
     else if (*s == MULT)
     {
-        regle4(d, s);
+        valid = regle4(d, s);
     }
     else if (*s == CLOSEPAR)
     {
-        regle4(d, s);
+        valid = regle4(d, s);
     }
     else if (*s == FIN)
     {
-        regle4(d, s);
+        valid = regle4(d, s);
     }
     else
     {
@@ -243,13 +243,13 @@ int Etat9::transition(Automate &d, Symbole *s)
 
 // regles : Il faut peut-etre penser a delete les pointeurs sur les symboles poped?
 
-void Etat::regle1(Automate &d, Symbole *s)
+int Etat::regle1(Automate &d, Symbole *s)
 {
     cerr<<"Not implemented because not necessary"<<endl;
     exit(1);
 }
 
-void Etat::regle2(Automate &d, Symbole *s)
+int Etat::regle2(Automate &d, Symbole *s)
 {
     Symbole *E1 = d.popSymbole();
     Symbole *plus = d.popSymbole();
@@ -264,10 +264,11 @@ void Etat::regle2(Automate &d, Symbole *s)
         cout << "ERREUR lors de la reduction de la regle 2" << endl;
         exit(1);
     }
-    d.reduction(3, new Expr(exprValeur), s);
+    delete(E1); delete(plus); delete(E2);
+    return d.reduction(3, new Expr(exprValeur), s);
 }
 
-void Etat::regle3(Automate &d, Symbole *s)
+int Etat::regle3(Automate &d, Symbole *s)
 {
     Symbole *E1 = d.popSymbole();
     Symbole *mult = d.popSymbole();
@@ -282,10 +283,11 @@ void Etat::regle3(Automate &d, Symbole *s)
         cout << "ERREUR lors de la reduction de la regle 3" << endl;
         exit(1);
     }
-    d.reduction(3, new Expr(exprValeur), s);
+    delete(E1); delete(mult); delete(E2);
+    return d.reduction(3, new Expr(exprValeur), s);
 }
 
-void Etat::regle4(Automate &d, Symbole *s)
+int Etat::regle4(Automate &d, Symbole *s)
 {
     Symbole *paren2 = d.popSymbole();
     Symbole *E = d.popSymbole();
@@ -302,10 +304,11 @@ void Etat::regle4(Automate &d, Symbole *s)
         cout << endl;
         exit(1);
     }
-    d.reduction(3, new Expr(exprValeur), s);
+    delete(paren1); delete(E); delete(paren2);
+    return d.reduction(3, new Expr(exprValeur), s);
 }
 
-void Etat::regle5(Automate &d, Symbole *s)
+int Etat::regle5(Automate &d, Symbole *s)
 {
     Symbole *s1 = d.popSymbole();
     int exprValeur;
@@ -318,5 +321,6 @@ void Etat::regle5(Automate &d, Symbole *s)
         cout << "ERREUR lors de la reduction de la regle 5, le symbole n'est pas val" << endl;
         exit(1);
     }
-    d.reduction(1, new Expr(exprValeur), s);
+    delete(s1);
+    return d.reduction(1, new Expr(exprValeur), s);
 }

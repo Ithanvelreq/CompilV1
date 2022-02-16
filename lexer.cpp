@@ -3,8 +3,10 @@
 Symbole * Lexer::Consulter() {
    if (!tampon) {
 
-      if (tete==flux.length())
+      if (tete==flux.length()){
          tampon = new Symbole(FIN);
+         cout<<"construction de fin "<< endl;
+      }
       else
       {
 
