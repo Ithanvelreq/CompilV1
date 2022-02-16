@@ -11,13 +11,22 @@ Automate::~Automate(){
     delete(lexer);
 }
 
-int Automate::analyser(){
+bool Automate::analyser(){
     bool accepted = false;
-    while(!accepted || !stackSymbole.empty()){
+    while(!accepted || stackSymbole.size() !=1){
         Symbole * suivant = lexer->Consulter();
+        cout << "etat actuel: Etat" << stackEtats.top()->getNumEtat() << " ||| dernier symbole sur le stack ";
+        if(!stackSymbole.empty()){
+            stackSymbole.top()->Affiche();
+        }
+        cout << " |||| symbole sous la tete: "; suivant->Affiche();
+        cout << endl;
         accepted = stackEtats.top()->transition(*this, suivant);
         lexer->Avancer();
         assert(stackEtats.size() == (stackSymbole.size()+1));
+    }
+    if (accepted){
+        resultat = stackSymbole.top()->getValeur();
     }
     return accepted;
 }
@@ -36,8 +45,12 @@ void Automate::decalage (Symbole *s, Etat * etat){
 void Automate::reduction(int n,Symbole * s) {
     for (int i=0;i<n;i++)
     {
-    delete(stackEtats.top());
-    stackEtats.pop();
+        delete(stackEtats.top());
+        stackEtats.pop();
     }
     stackEtats.top()->transition(*this,s);
+}
+
+int Automate::getResultat(){
+    return resultat;
 }

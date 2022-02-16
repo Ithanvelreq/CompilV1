@@ -1,9 +1,13 @@
 #include "etat.h"
 #include <iostream>
 
-bool *Etat0::transition(Automate &d, Symbole *s)
+int Etat::getNumEtat(){
+    return numEtat;
+}
+
+bool Etat0::transition(Automate &d, Symbole *s)
 {
-    s->Affiche();
+    
     if (*s == INT)
     {
         d.decalage(s, new Etat3());
@@ -19,9 +23,9 @@ bool *Etat0::transition(Automate &d, Symbole *s)
     return false;
 }
 
-bool *Etat1::transition(Automate &d, Symbole *s)
+bool Etat1::transition(Automate &d, Symbole *s)
 {
-    s->Affiche();
+    
     if (*s == PLUS)
     {
         d.decalage(s, new Etat4());
@@ -37,9 +41,9 @@ bool *Etat1::transition(Automate &d, Symbole *s)
     return false;
 }
 
-bool *Etat2::transition(Automate &d, Symbole *s)
+bool Etat2::transition(Automate &d, Symbole *s)
 {
-    s->Affiche();
+    
     if (*s == INT)
     {
         d.decalage(s, new Etat3());
@@ -55,32 +59,29 @@ bool *Etat2::transition(Automate &d, Symbole *s)
     return false;
 }
 
-bool *Etat3::transition(Automate &d, Symbole *s)
+bool Etat3::transition(Automate &d, Symbole *s)
 {
-    s->Affiche();
+    
     if (*s == PLUS)
     {
-        regleCinq(d, s);
+        regle5(d, s);
     }
     else if (*s == MULT)
     {
-        // regle 5
-        return new Etat2();
+        regle5(d, s);
     }
     else if (*s == CLOSEPAR)
     {
-        // regle 5
-        return new Etat1();
+        regle5(d, s);
     }
     else if (*s == FIN)
     {
-        // regle 5
-        return new Etat0();
+        regle5(d, s);
     }
     return false;
 }
 
-bool *Etat4::transition(Automate &d, Symbole *s)
+bool Etat4::transition(Automate &d, Symbole *s)
 {
     if (*s == INT)
     {
@@ -97,7 +98,7 @@ bool *Etat4::transition(Automate &d, Symbole *s)
     return false;
 }
 
-bool *Etat5::transition(Automate &d, Symbole *s)
+bool Etat5::transition(Automate &d, Symbole *s)
 {
     if (*s == INT)
     {
@@ -114,7 +115,7 @@ bool *Etat5::transition(Automate &d, Symbole *s)
     return false;
 }
 
-bool *Etat6::transition(Automate &d, Symbole *s)
+bool Etat6::transition(Automate &d, Symbole *s)
 {
     if (*s == PLUS)
     {
@@ -131,12 +132,11 @@ bool *Etat6::transition(Automate &d, Symbole *s)
     return false;
 }
 
-bool *Etat7::transition(Automate &d, Symbole *s)
+bool Etat7::transition(Automate &d, Symbole *s)
 {
     if (*s == PLUS)
     {
-        // regle 2
-        return new Etat0();
+        regle2(d, s);
     }
     else if (*s == MULT)
     {
@@ -144,80 +144,133 @@ bool *Etat7::transition(Automate &d, Symbole *s)
     }
     else if (*s == CLOSEPAR)
     {
-        // regle 2
-        return new Etat1();
+        regle2(d, s);
     }
     else if (*s == FIN)
     {
-        // regle 2
-        return new Etat0();
+        regle2(d, s);
     }
     return false;
 }
 
-bool *Etat8::transition(Automate &d, Symbole *s)
+bool Etat8::transition(Automate &d, Symbole *s)
 {
     if (*s == PLUS)
     {
-        // regle 3
-        return new Etat0();
+        regle3(d, s);
     }
     else if (*s == MULT)
     {
-        // regle 3
-        return new Etat2();
+        regle3(d, s);
     }
     else if (*s == CLOSEPAR)
     {
-        // regle 3
-        return new Etat1();
+        regle3(d, s);
     }
     else if (*s == FIN)
     {
-        // regle 3
-        return new Etat0();
+        regle3(d, s);
     }
     return false;
 }
 
-bool *Etat9::transition(Automate &d, Symbole *s)
+bool Etat9::transition(Automate &d, Symbole *s)
 {
     if (*s == PLUS)
     {
-        // regle 4
-        return new Etat0();
+        regle4(d, s);
     }
     else if (*s == MULT)
     {
-        // regle 4
-        return new Etat2();
+        regle4(d, s);
     }
     else if (*s == CLOSEPAR)
     {
-        // regle 4
-        return new Etat1();
+        regle4(d, s);
     }
     else if (*s == FIN)
     {
-        // regle 4
-        return new Etat0();
+        regle4(d, s);
     }
     return false;
 }
 
-// regles :
+// regles : Il faut peut-etre penser a delete les pointeurs sur les symboles poped?
 
-void Etat::regleCinq(Automate &d, Symbole *s)
+void Etat::regle1(Automate &d, Symbole *s)
+{
+    cerr<<"Not implemented because not necessary"<<endl;
+    exit(1);
+}
+
+void Etat::regle2(Automate &d, Symbole *s)
+{
+    Symbole *E1 = d.popSymbole();
+    Symbole *plus = d.popSymbole();
+    Symbole *E2 = d.popSymbole();
+    int exprValeur;
+    if (*E1 == EXPR && *plus == PLUS && *E2 == EXPR)
+    {
+        exprValeur = E1->getValeur() + E2->getValeur();
+    }
+    else
+    {
+        cout << "ERREUR lors de la reduction de la regle 2" << endl;
+        exit(1);
+    }
+    d.reduction(3, new Expr(exprValeur));
+}
+
+void Etat::regle3(Automate &d, Symbole *s)
+{
+    Symbole *E1 = d.popSymbole();
+    Symbole *mult = d.popSymbole();
+    Symbole *E2 = d.popSymbole();
+    int exprValeur;
+    if (*E1 == EXPR && *mult == MULT && *E2 == EXPR)
+    {
+        exprValeur = E1->getValeur() * E2->getValeur();
+    }
+    else
+    {
+        cout << "ERREUR lors de la reduction de la regle 3" << endl;
+        exit(1);
+    }
+    d.reduction(3, new Expr(exprValeur));
+}
+
+void Etat::regle4(Automate &d, Symbole *s)
+{
+    Symbole *paren2 = d.popSymbole();
+    Symbole *E = d.popSymbole();
+    Symbole *paren1 = d.popSymbole();
+    int exprValeur;
+    if (*paren1 == OPENPAR && *E == EXPR && *paren2 == CLOSEPAR)
+    {
+        exprValeur = E->getValeur();
+    }
+    else
+    {
+        cout << "ERREUR lors de la reduction de la regle 4" << endl;
+        paren1->Affiche(); E->Affiche(); paren2->Affiche();
+        cout << endl;
+        exit(1);
+    }
+    d.reduction(3, new Expr(exprValeur));
+}
+
+void Etat::regle5(Automate &d, Symbole *s)
 {
     Symbole *s1 = d.popSymbole();
     int exprValeur;
-    if (*s1 == INT && *s1 == EXPR)
+    if (*s1 == INT)
     {
         exprValeur = s1->getValeur();
     }
     else
     {
-        cout << "ERREUR lors de la reduction de la regle 5, le symbole n'a pas de valeur" << endl;
+        cout << "ERREUR lors de la reduction de la regle 5, le symbole n'est pas val" << endl;
+        exit(1);
     }
     d.reduction(1, new Expr(exprValeur));
 }

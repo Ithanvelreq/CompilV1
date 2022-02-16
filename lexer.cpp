@@ -46,7 +46,6 @@ Symbole * Lexer::Consulter() {
 }
 
 void Lexer::Avancer() {
-   delete(tampon);
    tampon = nullptr;
 }
 
