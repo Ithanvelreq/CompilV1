@@ -218,7 +218,7 @@ void Etat::regle2(Automate &d, Symbole *s)
         cout << "ERREUR lors de la reduction de la regle 2" << endl;
         exit(1);
     }
-    d.reduction(3, new Expr(exprValeur));
+    d.reduction(3, new Expr(exprValeur), s);
 }
 
 void Etat::regle3(Automate &d, Symbole *s)
@@ -236,7 +236,7 @@ void Etat::regle3(Automate &d, Symbole *s)
         cout << "ERREUR lors de la reduction de la regle 3" << endl;
         exit(1);
     }
-    d.reduction(3, new Expr(exprValeur));
+    d.reduction(3, new Expr(exprValeur), s);
 }
 
 void Etat::regle4(Automate &d, Symbole *s)
@@ -256,7 +256,7 @@ void Etat::regle4(Automate &d, Symbole *s)
         cout << endl;
         exit(1);
     }
-    d.reduction(3, new Expr(exprValeur));
+    d.reduction(3, new Expr(exprValeur), s);
 }
 
 void Etat::regle5(Automate &d, Symbole *s)
@@ -272,5 +272,5 @@ void Etat::regle5(Automate &d, Symbole *s)
         cout << "ERREUR lors de la reduction de la regle 5, le symbole n'est pas val" << endl;
         exit(1);
     }
-    d.reduction(1, new Expr(exprValeur));
+    d.reduction(1, new Expr(exprValeur), s);
 }

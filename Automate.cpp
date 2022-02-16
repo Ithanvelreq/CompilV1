@@ -42,13 +42,16 @@ void Automate::decalage (Symbole *s, Etat * etat){
     stackSymbole.push(s);
 }
 
-void Automate::reduction(int n,Symbole * s) {
+void Automate::reduction(int n,Symbole * s, Symbole * teteLecture) {
     for (int i=0;i<n;i++)
     {
         delete(stackEtats.top());
         stackEtats.pop();
     }
+    cout << "reduction a l'etat " << stackEtats.top()->getNumEtat() << " avec symbole de trans: "; s->Affiche();
+    cout << endl;
     stackEtats.top()->transition(*this,s);
+    stackEtats.top()->transition(*this,teteLecture);
 }
 
 int Automate::getResultat(){

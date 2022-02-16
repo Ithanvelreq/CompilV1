@@ -12,7 +12,7 @@ class Automate{
         ~Automate();
         bool analyser();
         void decalage (Symbole * s, Etat * etat);
-        void reduction (int n, Symbole * s);
+        void reduction (int n, Symbole * s, Symbole * teteLecture);
         int getResultat();
         Symbole * popSymbole();
 
