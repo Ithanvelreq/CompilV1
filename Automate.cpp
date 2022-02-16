@@ -12,8 +12,9 @@ Automate::~Automate(){
 }
 
 bool Automate::analyser(){
-    bool accepted = false;
-    while(!accepted || stackSymbole.size() !=1){
+    int accepted = 0;
+    bool init = true;
+    while(accepted==0 && (!stackSymbole.empty() || init)){
         Symbole * suivant = lexer->Consulter();
         cout << "etat actuel: Etat" << stackEtats.top()->getNumEtat() << " ||| dernier symbole sur le stack ";
         if(!stackSymbole.empty()){
@@ -24,9 +25,12 @@ bool Automate::analyser(){
         accepted = stackEtats.top()->transition(*this, suivant);
         lexer->Avancer();
         assert(stackEtats.size() == (stackSymbole.size()+1));
+        init = false;
     }
-    if (accepted){
+    if (accepted==1){
         resultat = stackSymbole.top()->getValeur();
+    }else{
+        accepted = 0;
     }
     return accepted;
 }
@@ -42,15 +46,15 @@ void Automate::decalage (Symbole *s, Etat * etat){
     stackSymbole.push(s);
 }
 
-void Automate::reduction(int n,Symbole * s, Symbole * teteLecture) {
+void Automate::reduction(int n,Symbole * expr, Symbole * teteLecture) {
     for (int i=0;i<n;i++)
     {
         delete(stackEtats.top());
         stackEtats.pop();
     }
-    cout << "reduction a l'etat " << stackEtats.top()->getNumEtat() << " avec symbole de trans: "; s->Affiche();
+    cout << "reduction a l'etat " << stackEtats.top()->getNumEtat() << " avec symbole de trans: "; expr->Affiche();
     cout << endl;
-    stackEtats.top()->transition(*this,s);
+    stackEtats.top()->transition(*this,expr);
     stackEtats.top()->transition(*this,teteLecture);
 }
 

@@ -5,9 +5,9 @@ int Etat::getNumEtat(){
     return numEtat;
 }
 
-bool Etat0::transition(Automate &d, Symbole *s)
+int Etat0::transition(Automate &d, Symbole *s)
 {
-    
+    int valid = 0;
     if (*s == INT)
     {
         d.decalage(s, new Etat3());
@@ -20,12 +20,16 @@ bool Etat0::transition(Automate &d, Symbole *s)
     {
         d.decalage(s, new Etat1());
     }
-    return false;
+    else
+    {
+        valid = 2;
+    }
+    return valid;
 }
 
-bool Etat1::transition(Automate &d, Symbole *s)
+int Etat1::transition(Automate &d, Symbole *s)
 {
-    
+    int valid = 0;
     if (*s == PLUS)
     {
         d.decalage(s, new Etat4());
@@ -36,14 +40,18 @@ bool Etat1::transition(Automate &d, Symbole *s)
     }
     else if (*s == FIN)
     {
-        return true;
+        return 1;
     }
-    return false;
+    else
+    {
+        valid = 2;
+    }
+    return valid;
 }
 
-bool Etat2::transition(Automate &d, Symbole *s)
+int Etat2::transition(Automate &d, Symbole *s)
 {
-    
+    int valid = 0;
     if (*s == INT)
     {
         d.decalage(s, new Etat3());
@@ -56,12 +64,16 @@ bool Etat2::transition(Automate &d, Symbole *s)
     {
         d.decalage(s, new Etat6());
     }
-    return false;
+    else
+    {
+        valid = 2;
+    }
+    return valid;
 }
 
-bool Etat3::transition(Automate &d, Symbole *s)
+int Etat3::transition(Automate &d, Symbole *s)
 {
-    
+    int valid = 0;
     if (*s == PLUS)
     {
         regle5(d, s);
@@ -78,11 +90,16 @@ bool Etat3::transition(Automate &d, Symbole *s)
     {
         regle5(d, s);
     }
-    return false;
+    else
+    {
+        valid = 2;
+    }
+    return valid;
 }
 
-bool Etat4::transition(Automate &d, Symbole *s)
+int Etat4::transition(Automate &d, Symbole *s)
 {
+    int valid = 0;
     if (*s == INT)
     {
         d.decalage(s, new Etat3());
@@ -95,11 +112,16 @@ bool Etat4::transition(Automate &d, Symbole *s)
     {
         d.decalage(s, new Etat7());
     }
-    return false;
+    else
+    {
+        valid = 2;
+    }
+    return valid;
 }
 
-bool Etat5::transition(Automate &d, Symbole *s)
+int Etat5::transition(Automate &d, Symbole *s)
 {
+    int valid = 0;
     if (*s == INT)
     {
         d.decalage(s, new Etat3());
@@ -112,11 +134,16 @@ bool Etat5::transition(Automate &d, Symbole *s)
     {
         d.decalage(s, new Etat8());
     }
-    return false;
+    else
+    {
+        valid = 2;
+    }
+    return valid;
 }
 
-bool Etat6::transition(Automate &d, Symbole *s)
+int Etat6::transition(Automate &d, Symbole *s)
 {
+    int valid = 0;
     if (*s == PLUS)
     {
         d.decalage(s, new Etat4());
@@ -129,11 +156,16 @@ bool Etat6::transition(Automate &d, Symbole *s)
     {
         d.decalage(s, new Etat9());
     }
-    return false;
+    else
+    {
+        valid = 2;
+    }
+    return valid;
 }
 
-bool Etat7::transition(Automate &d, Symbole *s)
+int Etat7::transition(Automate &d, Symbole *s)
 {
+    int valid = 0;
     if (*s == PLUS)
     {
         regle2(d, s);
@@ -150,11 +182,16 @@ bool Etat7::transition(Automate &d, Symbole *s)
     {
         regle2(d, s);
     }
-    return false;
+    else
+    {
+        valid = 2;
+    }
+    return valid;
 }
 
-bool Etat8::transition(Automate &d, Symbole *s)
+int Etat8::transition(Automate &d, Symbole *s)
 {
+    int valid = 0;
     if (*s == PLUS)
     {
         regle3(d, s);
@@ -171,11 +208,16 @@ bool Etat8::transition(Automate &d, Symbole *s)
     {
         regle3(d, s);
     }
-    return false;
+    else
+    {
+        valid = 2;
+    }
+    return valid;
 }
 
-bool Etat9::transition(Automate &d, Symbole *s)
+int Etat9::transition(Automate &d, Symbole *s)
 {
+    int valid = 0;
     if (*s == PLUS)
     {
         regle4(d, s);
@@ -192,7 +234,11 @@ bool Etat9::transition(Automate &d, Symbole *s)
     {
         regle4(d, s);
     }
-    return false;
+    else
+    {
+        valid = 2;
+    }
+    return valid;
 }
 
 // regles : Il faut peut-etre penser a delete les pointeurs sur les symboles poped?
