@@ -1,18 +1,19 @@
 #include <iostream>
-#include "lexer.h"
+#include <stack>
+#include "Etat.h"
+#include "symbole.h"
+#include "Automate.h"
 
 
 int main(void) {
-   string chaine("(1+34)*123");
-
-   Lexer l(chaine);
-
-   Symbole * s;
-   while(*(s=l.Consulter())!=FIN) {
-      s->Affiche();
-      cout<<endl;
-      l.Avancer();
+   string chaine("(12+12)*35+5");
+   Automate a(new Etat0(), chaine);
+   bool accepted = a.analyser();
+   if(accepted==1){
+      cout<<"Le resultat est :" << a.getResultat() << endl;
+   }else{
+      cout << "L'expression n'est pas syntaxiquement correcte :(" << endl;
    }
    return 0;
+   
 }
-

@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=
 #change for Maintest if you want to test the app
-EXEC=Maintest
+EXEC=Main
 
 $(EXEC): lexer.o symbole.o etat.o Automate.o $(EXEC).o
 	$(CC) -o $(EXEC) $(EXEC).o lexer.o symbole.o etat.o Automate.o
