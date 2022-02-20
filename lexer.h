@@ -4,17 +4,18 @@
 #include "symbole.h"
 using namespace std;
 
-class Lexer {
+class Lexer
+{
 
-   public:
-      Lexer(string s) : flux(s), tete(0), tampon(nullptr) { cout << "constr lexer" << endl;}
-      ~Lexer() { delete(tampon);cout << "destr lexer" << endl;}
+public:
+   Lexer(string s) : flux(s), tete(0), tampon(nullptr) {}
+   ~Lexer() { delete (tampon); }
 
-      Symbole * Consulter();
-      void Avancer();
+   Symbole *Consulter();
+   void Avancer();
 
-   protected:
-      string flux;
-      int tete;
-      Symbole * tampon;
+protected:
+   string flux;
+   int tete;
+   Symbole *tampon;
 };
