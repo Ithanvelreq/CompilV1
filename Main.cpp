@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stack>
 #include "Etat.h"
-#include "symbole.h"
 #include "Automate.h"
 
 int main(int argc, char *argv[])

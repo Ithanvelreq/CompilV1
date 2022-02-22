@@ -1,6 +1,5 @@
 #pragma once
 
-#include "symbole.h"
 #include "automate.h"
 #include <string>
 using namespace std;

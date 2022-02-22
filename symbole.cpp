@@ -1,5 +1,4 @@
 #include "symbole.h"
-#include <iostream>
 
 void Symbole::Affiche()
 {
