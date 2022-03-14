@@ -1,6 +1,9 @@
 #Exe
 Main
 
+*.zip
+MDARHRI-VELARDE
+
 # Testfile
 Maintest*
 .vscode

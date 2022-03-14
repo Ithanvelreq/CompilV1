@@ -78,7 +78,7 @@ int Automate::reduction(int n, Symbole *expr, Symbole *teteLecture)
         delete (stackEtats.top());
         stackEtats.pop();
     }
-    cout << "reduction a l'etat " << stackEtats.top()->getNumEtat() << " avec symbole de trans: ";
+    cout << "reduction vers l'etat " << stackEtats.top()->getNumEtat() << " avec symbole de trans: ";
     expr->Affiche();
     cout << endl;
     stackEtats.top()->transition(*this, expr);

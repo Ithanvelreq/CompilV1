@@ -8,7 +8,6 @@ Symbole *Lexer::Consulter()
       if (tete == flux.length())
       {
          tampon = new Symbole(FIN);
-         cout << "construction de fin " << endl;
       }
       else
       {
